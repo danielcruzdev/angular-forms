@@ -1,41 +1,49 @@
 <div class="container">
     <h2>User Settings</h2>
 
-    <form #form="ngForm">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
         <div class="form-group">
             <label for="Name">Name</label>
-            <input type="text" id="name" name="name" class="form-control" ngModel>
+            <input type="text" id="name" name="name" class="form-control" 
+                   [(ngModel)]='userSettings.name' required #nameField="ngModel"
+                   (blur)="onBlur(nameField)"
+                   [class.field-error]="form.submitted && nameField.invalid">
+            <div [hidden]="!form.submitted || nameField.valid"
+                 class="alert alert-danger">
+                Enter name
+            </div>
         </div>
+
         <div class="form-check form-group">
-            <input type="checkbox" class="form-check-input" id="emailOffers" name="emailOffers" ngModel>
+            <input type="checkbox" class="form-check-input" id="emailOffers" name="emailOffers" [(ngModel)]="userSettings.emailOffers">
             <label for="emailOffers" class="form-check-label">Email Special Offers</label>
-        </div>
+        </div> 
 
         <p>User Interface Style</p>
         <div class="form-check form-group">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" ngModel>
-                <label class="form-check-label" for="exampleRadios1">
+                <input class="form-check-input" type="radio" name="interfaceStyle" id="interfaceStyle1" value="option1" [(ngModel)]="userSettings.interfaceStyle">
+                <label class="form-check-label" for="interfaceStyle1">
                     Light
                 </label>
             </div>
-          <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" ngModel>
-                <label class="form-check-label" for="exampleRadios2">
-                    Medium
-                </label>
-          </div>
-          <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" ngModel>
-                <label class="form-check-label" for="exampleRadios3">
-                    Dark
-                </label>
-          </div>
+            <div class="form-check">
+                    <input class="form-check-input" type="radio" name="interfaceStyle" id="interfaceStyle2" value="option2" [(ngModel)]="userSettings.interfaceStyle">
+                    <label class="form-check-label" for="interfaceStyle2">
+                        Medium
+                    </label>
+            </div>
+            <div class="form-check">
+                    <input class="form-check-input" type="radio" name="interfaceStyle" id="interfaceStyle3" value="option3" [(ngModel)]="userSettings.interfaceStyle"> 
+                    <label class="form-check-label" for="interfaceStyle3">
+                        Dark
+                    </label>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="subscriptionType">Example select</label>
-            <select class="form-control" name="subscriptionType" id="subscriptionType" ngModel>
+            <select class="form-control" name="subscriptionType" id="subscriptionType" [(ngModel)]="userSettings.subscriptionType">
               <option>Monthy</option>
               <option>Annual</option>
               <option>Lifetime</option>
@@ -44,11 +52,9 @@
 
         <div class="form-group">
             <label for="notes">Notes</label>
-            <textarea name="notes" id="notes" rows="3" class="form-control" ngModel></textarea>
+            <textarea name="notes" id="notes" rows="3" class="form-control" [(ngModel)]="userSettings.notes"></textarea>
         </div>
 
         <button class="btn btn-primary">Send</button>
     </form>
-</div>
-
-{{ form.value | json }}
+</div> 
